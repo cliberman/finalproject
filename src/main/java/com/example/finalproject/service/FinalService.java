@@ -12,16 +12,14 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.zip.DataFormatException;
 
-@Builder
 @Service
 @Data
-//@RequiredArgsConstructor
+@RequiredArgsConstructor
 public class FinalService {
 
-    public static Object getNameAge(String name, Integer age) {
+    public static ResponseEntity getNameAge(String name, Integer age) {
 
         if (name.isEmpty()) {
-            //System.out.println("name is empty!");
             return new ResponseEntity<>("Sorry, you must enter a name.", HttpStatus.UNAUTHORIZED);
         } else {
             if (age >= 13) {
@@ -40,7 +38,7 @@ public class FinalService {
     public static Object doMath(String operation, float x, float[] nums) {
         ResponseEntity responseEntity;
         MathConfiguration mathConfiguration = new MathConfiguration();
-        if(mathConfiguration.isMathallowed()==true) {
+        if(mathConfiguration.isMathallowed()) {
             if (operation.equals("add")) {
                 for (int i = 0; i < nums.length; i++) {
                     nums[i] += x;

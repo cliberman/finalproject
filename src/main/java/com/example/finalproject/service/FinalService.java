@@ -20,18 +20,16 @@ public class FinalService {
 
     public static Object getNameAge(String name, Integer age) {
 
-        ResponseEntity responseEntity;
         if (name.isEmpty()) {
             System.out.println("name is empty!");
-            responseEntity = new ResponseEntity<>("Sorry, you must enter a name.", HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>("Sorry, you must enter a name.", HttpStatus.UNAUTHORIZED);
         } else {
             if (age >= 13) {
-                responseEntity = new ResponseEntity<>("User is over bar mitzvah.", HttpStatus.OK);
+                return new ResponseEntity<>("User is over bar mitzvah.", HttpStatus.OK);
             } else {
-                responseEntity = new ResponseEntity<>("User is under bar mitzvah.", HttpStatus.OK);
+                return new ResponseEntity<>("User is under bar mitzvah.", HttpStatus.OK);
             }
         }
-        return responseEntity;
     }
 
     public static Object getTime() {

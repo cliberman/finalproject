@@ -21,7 +21,7 @@ public class FinalService {
     public static Object getNameAge(String name, Integer age) {
 
         if (name.isEmpty()) {
-            System.out.println("name is empty!");
+            //System.out.println("name is empty!");
             return new ResponseEntity<>("Sorry, you must enter a name.", HttpStatus.UNAUTHORIZED);
         } else {
             if (age >= 13) {

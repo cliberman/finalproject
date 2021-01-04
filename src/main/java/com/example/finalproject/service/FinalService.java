@@ -1,6 +1,8 @@
 package com.example.finalproject.service;
 
 import com.example.finalproject.configuration.MathConfiguration;
+import com.example.finalproject.model.NumArray;
+import com.example.finalproject.model.UserInfo;
 import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +19,10 @@ import java.util.zip.DataFormatException;
 @RequiredArgsConstructor
 public class FinalService {
 
-    public static ResponseEntity getNameAge(String name, Integer age) {
-
+    public static ResponseEntity getNameAge(UserInfo userInfo) {
+        String name = userInfo.getName();
+        Integer age = userInfo.getAge();
+        System.out.println("name: " + name + "age: " + age);
         if (name.isEmpty()) {
             return new ResponseEntity<>("Sorry, you must enter a name.", HttpStatus.UNAUTHORIZED);
         } else {
@@ -35,10 +39,9 @@ public class FinalService {
         return date;
     }
 
-    public static Object doMath(String operation, float x, float[] nums) {
+    public static Object doMath(String operation, float x, NumArray numArray) {
+        float[] nums = numArray.getNums();
         ResponseEntity responseEntity;
-        MathConfiguration mathConfiguration = new MathConfiguration();
-        if(mathConfiguration.isMathallowed()) {
             if (operation.equals("add")) {
                 for (int i = 0; i < nums.length; i++) {
                     nums[i] += x;
@@ -58,8 +61,4 @@ public class FinalService {
             }
             return new ResponseEntity<>(nums, HttpStatus.OK);
         }
-        else {
-            return new ResponseEntity<>("Sorry, no math allowed here.", HttpStatus.SERVICE_UNAVAILABLE);
-        }
-    }
 }

@@ -1,6 +1,8 @@
 package com.example.finalproject.controller;
 
+import com.example.finalproject.model.UserInfo;
 import com.example.finalproject.service.FinalService;
+import org.apache.catalina.User;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
@@ -14,8 +16,7 @@ import org.springframework.http.ResponseEntity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -33,18 +34,18 @@ public class FinalControllerTest {
 
     @Test
     public void start_shouldCallService_andReturnItsResult() {
-
-        when(mockFinalService.getNameAge(anyString(), anyInt())).thenReturn(new ResponseEntity<>("User is over bar mitzvah.", HttpStatus.OK));
-        //Object actualResponseEntity = finalService.getNameAge("Chana", 20);
-        assertThat(mockFinalService.getNameAge("Chana", 20)).isEqualTo(new ResponseEntity<>("User is over bar mitzvah.", HttpStatus.OK));
-        verify(mockFinalService).getNameAge("Chana", 20);
+        UserInfo user = new UserInfo("Chana", 20);
+        when(mockFinalService.getNameAge(any(UserInfo.class))).thenReturn(new ResponseEntity<>("User is over bar mitzvah.", HttpStatus.OK));
+        Object actualResponseEntity = finalService.getNameAge(user);
+        assertThat(mockFinalService.getNameAge(user)).isEqualTo(new ResponseEntity<>("User is over bar mitzvah.", HttpStatus.OK));
+        verify(mockFinalService).getNameAge(user);
     }
 
 
     @Test
     public void start_returnsUnauthorized_whenCalledWithNoName() {
         ResponseEntity expectedResponseEntity = new ResponseEntity("Sorry, you must enter a name.", HttpStatus.UNAUTHORIZED);
-        Object actualResponseEntity = finalService.getNameAge("", 14);
+        Object actualResponseEntity = finalService.getNameAge(new UserInfo("", 14));
         assertThat(actualResponseEntity).isEqualTo(expectedResponseEntity);
     }
 

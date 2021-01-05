@@ -30,7 +30,7 @@ public class FinalControllerTest {
     //private FinalService finalService;
 
     @Mock
-    private FinalService finalServiceMock;
+    private FinalService finalService;
 
 //    @Rule
 //    public MockitoRule mockitoRule = MockitoJUnit.rule();;
@@ -42,10 +42,10 @@ public class FinalControllerTest {
     public void start_shouldCallService_andReturnItsResult() {
         UserInfo user = new UserInfo("Chana", 20);
         System.out.println("created the user");
-        when(finalServiceMock.getNameAge(any(UserInfo.class))).thenReturn(new ResponseEntity<>("User is over bar mitzvah.", HttpStatus.OK));
+        when(finalService.getNameAge(any(UserInfo.class))).thenReturn(new ResponseEntity<>("User is over bar mitzvah.", HttpStatus.OK));
         System.out.println("got past the when");
         ResponseEntity actualResponseEntity = subject.getNameAge(user);
-        verify(finalServiceMock).getNameAge(user);
+        verify(finalService).getNameAge(user);
         assertThat(actualResponseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(actualResponseEntity.getBody()).isEqualTo("User is over bar mitzvah.");
         }
@@ -54,7 +54,7 @@ public class FinalControllerTest {
     @Test
     public void start_returnsUnauthorized_whenCalledWithNoName() {
         ResponseEntity expectedResponseEntity = new ResponseEntity("Sorry, you must enter a name.", HttpStatus.UNAUTHORIZED);
-        Object actualResponseEntity = finalServiceMock.getNameAge(new UserInfo("", 14));
+        Object actualResponseEntity = finalService.getNameAge(new UserInfo("", 14));
         assertThat(actualResponseEntity).isEqualTo(expectedResponseEntity);
     }
 

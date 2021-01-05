@@ -19,7 +19,7 @@ import java.util.zip.DataFormatException;
 @RequiredArgsConstructor
 public class FinalService {
 
-    public static ResponseEntity getNameAge(UserInfo userInfo) {
+    public ResponseEntity getNameAge(UserInfo userInfo) {
         String name = userInfo.getName();
         Integer age = userInfo.getAge();
         System.out.println("name: " + name + "age: " + age);
@@ -34,12 +34,12 @@ public class FinalService {
         }
     }
 
-    public static Object getTime() {
+    public Object getTime() {
         Date date = new Date();
         return date;
     }
 
-    public static Object doMath(String operation, float x, NumArray numArray) {
+    public Object doMath(String operation, float x, NumArray numArray) {
         float[] nums = numArray.getNums();
         ResponseEntity responseEntity;
             if (operation.equals("add")) {
